@@ -2,7 +2,7 @@
 const node=(tag,text)=>{const n=document.createElement(tag);if(text!==undefined)n.textContent=text;return n;};
 export function showSourceState(dataset){
  const date=new Intl.DateTimeFormat('fi-FI',{dateStyle:'long',timeZone:'Europe/Helsinki'}).format(new Date(dataset.checked));
- document.getElementById('data-age').textContent=`Tiedot voivat olla virheellisiä. Aineisto päivitetty viimeksi ${date}. Tarkista tiedot virallisesta lähteestä ennen kuljetusta.`;
+ document.getElementById('data-age').textContent=`Tiedot voivat olla virheellisiä. Aineisto päivitetty viimeksi ${date}. GitHub Pages palvelee vain staattisia tiedostoja eikä voi suorittaa sovelluksen palvelintaustaa. Tässä versiossa ei siksi ole automaattista päivittäistä lähdetarkistusta. Aineiston muutokset tarkistetaan ja julkaistaan käsin. Tarkista tiedot virallisesta lähteestä ennen kuljetusta.`;
  document.getElementById('source-check').textContent='GitHub Pages: mukana toimitettu paikallinen aineistokopio. Tätä versiota päivitetään käsin. Sivulla ei ole automaattista lähdetarkistusta.';
 }
 export function reportButton(record,dataset){

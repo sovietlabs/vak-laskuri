@@ -2,7 +2,7 @@
 const node=(tag,text)=>{const n=document.createElement(tag);if(text!==undefined)n.textContent=text;return n;};
 export function showSourceState(dataset){
  const date=new Intl.DateTimeFormat('en-GB',{dateStyle:'long',timeZone:'Europe/Helsinki'}).format(new Date(dataset.checked));
- document.getElementById('data-age').textContent=`Information may be incorrect. Dataset last updated on ${date}. Check the official source before transport.`;
+ document.getElementById('data-age').textContent=`Information may be incorrect. Dataset last updated on ${date}. GitHub Pages serves static files and cannot run an application backend. This version therefore has no automatic daily source check. Dataset changes are reviewed and published manually. Check the official source before transport.`;
  document.getElementById('source-check').textContent='GitHub Pages: bundled local dataset. This version is updated manually. There is no automatic source check.';
 }
 export function reportButton(record,dataset){
