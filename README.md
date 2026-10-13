@@ -1,5 +1,7 @@
 # VAK-laskuri
 
+English | [Suomi](README.fi.md)
+
 **VAK-laskuri is a Finnish web calculator for the quantity exemption in road transport of dangerous goods.** It helps a driver build a load list, select the exact substance classification, and check the quantity calculation under VAK 2025 section 1.1.3.6.
 
 **[Open VAK-laskuri](https://sovietlabs.github.io/vak-laskuri/)**
@@ -16,6 +18,16 @@
 - Shows classification, labels, LQ/EQ fields, packing codes, tunnel codes, handling instructions, and source links.
 - Keeps up to ten recently selected variants in this browser and lets the user clear them.
 - Prints a load summary and prepares data-error reports.
+
+## How to use
+
+1. Open the calculator. Select **English** in the top navigation if needed.
+2. Search by UN number or Finnish substance name.
+3. Select the exact classification, enter the quantity, and select its measurement basis.
+4. Add all relevant substances in the complete transport unit.
+5. Check the result, source provisions, and remaining obligations. Print a summary if needed.
+
+The English interface is available at **[English calculator](https://sovietlabs.github.io/vak-laskuri/en.html)**. Official names and regulatory extracts remain in Finnish. Switching language clears the current load. Recent selections remain available.
 
 ## Käyttöohje
 

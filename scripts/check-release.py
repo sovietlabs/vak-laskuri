@@ -2,7 +2,7 @@
 import json,re,struct,zlib
 from pathlib import Path
 root=Path(__file__).resolve().parents[1]
-required={'index.html','style.css','app.mjs','engine.mjs','history.mjs','catalogue.mjs','backend-ui.mjs','icon.svg','manifest.webmanifest','data.json','rules.json','.nojekyll'}
+required={'en.html','app-en.mjs','backend-ui-en.mjs','engine-en.mjs','index.html','style.css','app.mjs','engine.mjs','history.mjs','catalogue.mjs','backend-ui.mjs','icon.svg','manifest.webmanifest','data.json','rules.json','.nojekyll'}
 actual={p.name for p in (root/'docs').iterdir() if p.is_file()}
 assert actual==required,('Unexpected website file set',actual^required)
 for p in root.rglob('*'):

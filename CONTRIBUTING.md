@@ -45,3 +45,7 @@ Use representative public substance data. Capture only the application. Do not i
 ## Commit identity
 
 Use the project's pseudonymous identity and the GitHub no-reply email for the account. Check author and committer metadata before pushing. Do not include a personal name or email in screenshots, attribution, commit messages or licence notices.
+
+## Languages
+
+Update the Finnish and English interfaces together. Keep official Finnish substance names and regulatory extracts unchanged. Keep calculation behaviour equal in both engine modules and run the language parity tests. Update README.md and README.fi.md together. Switching language loads a new page and clears the current load.
