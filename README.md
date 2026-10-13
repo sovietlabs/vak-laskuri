@@ -1,10 +1,10 @@
-# VAK-laskuri
+# Dangerous Goods Transport Calculator
 
 English | [Suomi](README.fi.md)
 
-**VAK-laskuri is a Finnish web calculator for the quantity exemption in road transport of dangerous goods.** It helps a driver build a load list, select the exact substance classification, and check the quantity calculation under VAK 2025 section 1.1.3.6.
+**Dangerous Goods Transport Calculator (Finnish: VAK-laskuri) is a web calculator for the quantity exemption in road transport of dangerous goods.** It helps a driver build a load list, select the exact substance classification, and check the quantity calculation under VAK 2025 section 1.1.3.6.
 
-**[Open VAK-laskuri](https://sovietlabs.github.io/vak-laskuri/)**
+**[Open Dangerous Goods Transport Calculator](https://sovietlabs.github.io/vak-laskuri/en.html)**
 
 > Test version. Information may be incorrect or incomplete. The bundled dataset was last updated on **11 October 2026**. This version is updated manually. A deployment date is not a data update date. Verify the applicable official rules before transport. The result is not a transport approval.
 
