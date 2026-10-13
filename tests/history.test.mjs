@@ -1,0 +1,12 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {HISTORY_KEY,readRecent,rememberRecent,saveRecent,clearRecent} from '../docs/history.mjs';
+const dataset={sha256:'edition-a',rows:Array.from({length:12},(_,i)=>({id:String(i+1),un:'1202'}))};
+function storage(){const map=new Map();return {getItem:k=>map.get(k)??null,setItem:(k,v)=>map.set(k,v),removeItem:k=>map.delete(k)};}
+test('recent selections survive a new read, with ten unique entries',()=>{const s=storage();let ids=[];for(let i=1;i<=12;i++)ids=rememberRecent(ids,String(i),dataset);assert.deepEqual(ids,['12','11','10','9','8','7','6','5','4','3']);assert.equal(saveRecent(s,ids,dataset),true);assert.deepEqual(readRecent(s,dataset).ids,ids);});
+test('repeat selection moves the exact variant to the front',()=>{assert.deepEqual(rememberRecent(['1','2','3'],'2',dataset),['2','1','3']);assert.deepEqual(rememberRecent(['1'],'2',dataset),['2','1']);});
+test('no quantities or substance names are persisted',()=>{const s=storage();saveRecent(s,['1'],dataset);assert.deepEqual(JSON.parse(s.getItem(HISTORY_KEY)),{version:1,dataset:'edition-a',ids:['1']});});
+test('dataset changes invalidate old row IDs',()=>{const s=storage();saveRecent(s,['1'],dataset);assert.deepEqual(readRecent(s,{...dataset,sha256:'edition-b'}).ids,[]);});
+test('malformed, excessive and hostile storage is rejected or filtered',()=>{const s=storage();for(const raw of ['{','null','[]','x'.repeat(5000),JSON.stringify({version:2,dataset:'edition-a',ids:['1']})]){s.setItem(HISTORY_KEY,raw);assert.deepEqual(readRecent(s,dataset).ids,[]);}s.setItem(HISTORY_KEY,JSON.stringify({version:1,dataset:'edition-a',ids:['1','1','999','<img src=x onerror=alert(1)>',null,{},2,'2']}));assert.deepEqual(readRecent(s,dataset).ids,['1','2']);assert.deepEqual(rememberRecent(['1'],'<script>',dataset),['1']);});
+test('storage denial does not interrupt the calculator',()=>{const denied={getItem(){throw Error();},setItem(){throw Error();},removeItem(){throw Error();}};assert.equal(readRecent(denied,dataset).available,false);assert.equal(saveRecent(denied,['1'],dataset),false);assert.equal(clearRecent(denied),false);assert.equal(readRecent(null,dataset).available,false);});
+test('history clear removes only the VAK history key',()=>{const s=storage();s.setItem('other-app','keep');saveRecent(s,['1'],dataset);assert.equal(clearRecent(s),true);assert.deepEqual(readRecent(s,dataset).ids,[]);assert.equal(s.getItem('other-app'),'keep');});

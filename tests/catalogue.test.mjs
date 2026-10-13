@@ -1,0 +1,9 @@
+import {test} from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';
+import {validateCatalogue,validateRules} from '../docs/catalogue.mjs';
+const original=JSON.parse(fs.readFileSync(new URL('../docs/data.json',import.meta.url)));const rules=JSON.parse(fs.readFileSync(new URL('../docs/rules.json',import.meta.url)));
+const copy=()=>structuredClone(original);
+test('approved catalogue and rule extracts validate',()=>{assert.equal(validateCatalogue(original),original);assert.equal(validateRules(rules),rules);});
+test('untrusted source URLs, invalid dates and forged catalogue hashes rejected',()=>{for(const url of ['javascript:alert(1)','data:text/html,x','https://evil.test/table.xlsx','//evil.test']){const d=copy();d.source=url;assert.throws(()=>validateCatalogue(d));}for(const key of ['checked','sha256']){const d=copy();d[key]='<svg/onload=alert(1)>';assert.throws(()=>validateCatalogue(d));}});
+test('duplicate or hostile IDs and invalid transport categories rejected',()=>{for(const value of ['<script>','1/../../auth','9999999']){const d=copy();d.rows[0].id=value;assert.throws(()=>validateCatalogue(d));}const d=copy();d.rows[1].id=d.rows[0].id;assert.throws(()=>validateCatalogue(d));for(const value of [-1,5,'2',{},true]){const d=copy();d.rows[0].category=value;assert.throws(()=>validateCatalogue(d));}});
+test('unexpected field types and oversized text rejected',()=>{for(const value of [{},null,'x'.repeat(5001)]){const d=copy();d.rows[0].name=value;assert.throws(()=>validateCatalogue(d));}});
+test('rule page links only accept bounded integers and recognised code keys',()=>{for(const page of [0,2001,'1#javascript:alert(1)',1.2])assert.throws(()=>validateRules({CV9:{page,text:'test'}}));assert.throws(()=>validateRules({'<svg>':{page:1,text:'test'}}));assert.throws(()=>validateRules({CV9:{page:1,text:{}}}));});
